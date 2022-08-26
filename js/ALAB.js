@@ -15,11 +15,11 @@ export class ALAB{
 	}
     
     #setData(){
-        /* Si el repositorio en Localstorage esta vacio, carga por unica vez los datos del array */
         
         let repositorio = this.#recuperar(this.#nombreTabla)
         if (repositorio == null){
-            this.#data = [
+            /* Si el repositorio en Localstorage esta vacio, carga por unica vez los datos del array */
+            /* this.#data = [
                 {id:1, cat: "anillos", mod: "royal", precio: 350, stk:10, title: "Anillo Royal", desc: "Este anillo te transportará dos siglos atrás donde las reinas lucían las creaciones de sus propios orfebres que eran ", img: "anillo_imperial.jpg"},
                 {id:2, cat: "anillos", mod: "solitario", precio: 200, stk:10, title: "Anillo Rococó", desc: "Una pieza que supera la prueba del tiempo, este glamoroso anillo de halo tiene en el centro una impresionante circonia cú", img: "anillo_rococo.jpg"},
                 {id:3, cat: "anillos", mod: "heart", precio: 350, stk:10, title: "Anillo Cuore", desc: "Expresa el verdadero deseo de tu corazón con este brillante anillo de eternidad. Acabado a mano en Recubrimiento en Oro", img: "anillo_cuore.jpg"},
@@ -29,9 +29,23 @@ export class ALAB{
                 {id:7, cat: "aros", mod: "Pave-Heart", precio: 500, stk: 5, title: "Aros Pave Heart", desc: "Enmarque su rostro con estos aretes de aro Pavé Heart en tonos cálidos. Estas argollas enchapadas en oro de 14k es", img: "aros2.jpg"},
                 {id:8, cat: "dijes", mod: "baloon-birthday", precio: 350, stk: 10, title: "Dije Baloon", desc: "Deje que su espíritu se eleve con este dije de globo aerostático de feliz cumpleaños. Acabado a mano en plata esterl", img: "dije_JB.jpg"},
                 {id:9, cat: "dijes", mod: "turtle", precio: 400, stk: 5, title: "Dije Turtle", desc: "El dije colgante de tortuga marina de cristal de Murano está inspirado en las pacíficas criaturas del mar azul profundo", img: "dije2.jpg"}
-            ]
+            ] */
 
-            this.#guardar()
+            /* Si el repositorio en Localstorage esta vacio, carga por unica vez los datos desde la API */
+            const getDatafromAPI = async () => {
+                console.log("Solicitando datos a la API...")
+                const resp = await fetch('./data.json')
+                const datos = await resp.json()
+                console.log(datos)
+                this.#data = datos
+                this.#guardar()
+                console.log("Datos cargados.")
+            }
+            getDatafromAPI()
+            setTimeout( function() {
+                console.log("PT: "+this.#data);
+            }, 5000)
+            
         } else {
             this.#data = repositorio
         }
