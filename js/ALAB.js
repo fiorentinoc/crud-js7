@@ -36,15 +36,13 @@ export class ALAB{
                 console.log("Solicitando datos a la API...")
                 const resp = await fetch('./data.json')
                 const datos = await resp.json()
-                console.log(datos)
+                //console.log(datos)
                 this.#data = datos
                 this.#guardar()
-                console.log("Datos cargados.")
+                console.log("Datos cargados. Renderizando Articulos...")
             }
             getDatafromAPI()
-            setTimeout( function() {
-                console.log("PT: "+this.#data);
-            }, 5000)
+            
             
         } else {
             this.#data = repositorio
